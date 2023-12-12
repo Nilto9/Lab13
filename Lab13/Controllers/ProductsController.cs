@@ -20,7 +20,6 @@ namespace Lab13.Controllers
             _context = context;
         }
 
-
         // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
@@ -46,7 +45,6 @@ namespace Lab13.Controllers
             {
                 return NotFound();
             }
-
             return product;
         }
 
@@ -61,7 +59,6 @@ namespace Lab13.Controllers
             }
 
             _context.Entry(product).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -77,7 +74,6 @@ namespace Lab13.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
