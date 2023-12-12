@@ -7,9 +7,7 @@
         public DateTime Date { get; set; }
         public string InvoiceNumber { get; set; }
         public decimal Total { get; set; }
-
         public Customer? Customer { get; set; }
-
         public List<Detail>? Detail { get; set; }
     }
 
