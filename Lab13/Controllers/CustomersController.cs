@@ -41,13 +41,8 @@ namespace Lab13.Controllers
             {
                 return NotFound();
             }
-
             return customers;
         }
-
-
-
-
 
         // GET: api/Customers
         [HttpGet]
@@ -105,7 +100,6 @@ namespace Lab13.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -137,10 +131,8 @@ namespace Lab13.Controllers
             {
                 return NotFound();
             }
-
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
