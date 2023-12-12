@@ -21,8 +21,6 @@ namespace Lab13.Controllers
             _context = context;
         }
 
-
-
         [HttpGet("SearchByCustomerName")]
         public async Task<ActionResult<IEnumerable<Invoice>>> SearchInvoicesByCustomerName([FromQuery] string customerName)
         {
@@ -31,14 +29,12 @@ namespace Lab13.Controllers
                 .Where(i => EF.Functions.Like(i.Customer.FirstName, $"%{customerName}%") ||
                             EF.Functions.Like(i.Customer.LastName, $"%{customerName}%"))
                 .OrderByDescending(i => i.Customer.LastName); 
-
             var invoices = await query.ToListAsync();
 
             if (invoices == null || !invoices.Any())
             {
                 return NotFound();
             }
-
             return invoices;
         }
 
@@ -52,15 +48,11 @@ namespace Lab13.Controllers
                 .Where(i => EF.Functions.Like(i.InvoiceNumber, $"%{invoiceNumber}%"))
                 .OrderBy(i => i.Customer.LastName)
                 .ThenBy(i => i.InvoiceNumber);
-
             var invoices = await query.ToListAsync();
-
             if (invoices == null || !invoices.Any())
             {
                 return NotFound();
             }
-
-
             var response = invoices.Select(invoice => new RESInvoicesByInvoiceNumber
             {
                 InvoiceNumber = invoice.InvoiceNumber,
@@ -74,7 +66,7 @@ namespace Lab13.Controllers
 
             return response;
         }
-
+        
         [HttpGet("DetailsByDate")]
         public async Task<ActionResult<IEnumerable<RESInvoicesDetailsByDate>>> GetInvoiceDetailsByDate([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
@@ -92,7 +84,6 @@ namespace Lab13.Controllers
             {
                 return NotFound();
             }
-
             var response = invoices.Select(invoice => new RESInvoicesDetailsByDate
             {
                 InvoiceNumber = invoice.InvoiceNumber,
@@ -103,10 +94,8 @@ namespace Lab13.Controllers
                 CustomerLastName = invoice.Customer.LastName,
                 CustomerDocumentNumber = invoice.Customer.DocumentNumber
             }).OrderBy(res => res.Date).ThenBy(res => res.DetailProduct).ToList();
-
             return response;
         }
-
 
         // GET: api/Invoices
         [HttpGet]
@@ -148,7 +137,6 @@ namespace Lab13.Controllers
             }
 
             _context.Entry(invoice).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -164,7 +152,6 @@ namespace Lab13.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
